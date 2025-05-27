@@ -1,0 +1,611 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Aplikasi Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        darkest: '#010101',
+                        premium: '#1e1e1e',
+                        accent: '#3b82f6',
+                        neon: '#00f2ff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Barlow', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shine': 'shine 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shine: {
+                            '0%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                            '100%': { 'background-position': '0% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Barlow:wght@600;700;800&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        
+        .card-glow {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 242, 255, 0.25);
+        }
+        
+        .price-tag {
+            background: linear-gradient(90deg, #3b82f6, #00f2ff);
+            color: black;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        
+        .buy-btn {
+            background: linear-gradient(90deg, #3b82f6, #00f2ff);
+            color: black;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 242, 255, 0.4);
+        }
+        
+        .category-btn {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .app-icon {
+            background: linear-gradient(145deg, #1a1a1a, #262626);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.03) 45%,
+                rgba(59, 130, 246, 0.2) 50%,
+                rgba(255, 255, 255, 0.03) 55%,
+                rgba(255, 255, 255, 0) 70%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.7s;
+        }
+        
+        .app-card:hover .app-icon::after {
+            left: 100%;
+            top: 100%;
+        }
+        
+        .feature-item {
+            position: relative;
+            padding-left: 1.75rem;
+        }
+        
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: #00f2ff;
+            box-shadow: 0 0 5px #00f2ff;
+        }
+        
+        .nav-glass {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .shine-text {
+            background: linear-gradient(90deg, #3b82f6, #00f2ff, #3b82f6);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="nav-glass fixed w-full z-50 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-neon flex items-center justify-center">
+                    <i class="fas fa-crown text-black text-sm"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">PREMIUM<span class="shine-text">STORE</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#apps" class="hover:text-accent transition">Aplikasi</a>
+                <a href="#features" class="hover:text-accent transition">Fitur</a>
+                <a href="#contact" class="hover:text-accent transition">Kontak</a>
+            </div>
+            <button class="md:hidden text-xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden grid-pattern">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent filter blur-3xl opacity-20 animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-neon filter blur-3xl opacity-20 animate-pulse-slow"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto py-20">
+            <div class="inline-block px-4 py-2 mb-6 rounded-full bg-gradient-to-r from-accent/20 to-neon/20 border border-accent/30">
+                <span class="text-sm font-medium tracking-wider">LANGGANAN PREMIUM</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight">
+                <span class="text-white">Unlock</span> <span class="shine-text">Premium</span> <span class="text-white">Anda</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+                Tingkatkan pengalaman digital Anda dengan koleksi langganan aplikasi premium kami dengan harga kompetitif.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#apps" class="px-8 py-4 bg-gradient-to-r from-accent to-neon text-black font-bold rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    premium app list
+                </a>
+                <a href="#contact" class="px-8 py-4 border border-accent/30 text-white font-bold rounded-lg hover:bg-accent/10 transition-all duration-300 transform hover:-translate-y-1">
+                    hubungi Kami
+                </a>
+            </div>
+            
+            <div class="mt-20 animate-float">
+                <a href="#apps" class="scroll-down inline-block p-3 rounded-full border border-accent/30 hover:border-accent/60 transition">
+                    <i class="fas fa-chevron-down text-accent"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="apps" class="py-20 bg-darker">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">
+                    <span class="text-white">Aplikasi</span> <span class="shine-text">Premium</span>
+                </h2>
+                <p class="text-gray-400 max-w-xl mx-auto">
+                    Pilih dari koleksi eksklusif langganan premium untuk aplikasi favorit Anda
+                </p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="category-btn active px-6 py-3 rounded-full font-medium" onclick="filterApps('all')">
+                    All
+                </button>
+                <button class="category-btn px-6 py-3 rounded-full font-medium" onclick="filterApps('streaming')">
+                    <i class="fas fa-play-circle mr-2"></i> Streaming
+                </button>
+                <button class="category-btn px-6 py-3 rounded-full font-medium" onclick="filterApps('creative')">
+                    <i class="fas fa-paint-brush mr-2"></i> Kreatif
+                </button>
+                <button class="category-btn px-6 py-3 rounded-full font-medium" onclick="filterApps('productivity')">
+                    <i class="fas fa-bolt mr-2"></i> Produktivitas
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <div class="app-card bg-premium rounded-xl p-6 border border-gray-800 card-hover" data-category="streaming">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-xl app-icon flex items-center justify-center mr-4">
+                            <i class="fab fa-spotify text-green-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-white">Spotify Premium</h3>
+                            <p class="text-gray-400">Musik Streaming</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-tag inline-block px-4 py-1 rounded-full mb-4">
+                        Rp99.999/month
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Streaming musik tanpa iklan dengan fitur offline dan kualitas audio premium.</p>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item">
+                            <span class="text-gray-300">Pengalaman mendengarkan tanpa iklan</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Unduh untuk pemutaran offline</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Kualitas audio tinggi 320kbps</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openWhatsApp('Spotify Premium - Rp99.999/month')" class="buy-btn w-full py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Dapatkan Premium</span>
+                    </button>
+                </div>
+
+                <div class="app-card bg-premium rounded-xl p-6 border border-gray-800 card-hover" data-category="streaming">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-xl app-icon flex items-center justify-center mr-4">
+                            <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-white">YouTube Premium</h3>
+                            <p class="text-gray-400">Video Streaming</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-tag inline-block px-4 py-1 rounded-full mb-4">
+                        Rp99.999/month
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Nikmati YouTube tanpa iklan, dengan pemutaran latar belakang dan YouTube Music termasuk.</p>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item">
+                            <span class="text-gray-300">Video dan musik tanpa iklan</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Pemutaran latar belakang & offline</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">YouTube Music premium termasuk</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openWhatsApp('YouTube Premium - Rp99.999/month')" class="buy-btn w-full py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Dapatkan Premium</span>
+                    </button>
+                </div>
+
+                <div class="app-card bg-premium rounded-xl p-6 border border-gray-800 card-hover" data-category="streaming">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-xl app-icon flex items-center justify-center mr-4">
+                            <i class="fas fa-film text-red-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-white">Netflix Premium</h3>
+                            <p class="text-gray-400">Film & TV</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-tag inline-block px-4 py-1 rounded-full mb-4">
+                        Rp99.999/month
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Paket Netflix ultimate dengan 4K Ultra HD dan beberapa layar simultan.</p>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item">
+                            <span class="text-gray-300">Kualitas 4K Ultra HD</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">4 layar bersamaan</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Film dan acara TV tanpa batas</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openWhatsApp('Netflix Premium - Rp99.999/month')" class="buy-btn w-full py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Dapatkan Premium</span>
+                    </button>
+                </div>
+
+                <div class="app-card bg-premium rounded-xl p-6 border border-gray-800 card-hover" data-category="creative">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-xl app-icon flex items-center justify-center mr-4">
+                            <i class="fas fa-palette text-teal-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-white">Canva Pro</h3>
+                            <p class="text-gray-400">Desain Grafis</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-tag inline-block px-4 py-1 rounded-full mb-4">
+                        Rp99.999/month
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Platform desain premium dengan jutaan aset dan alat canggih.</p>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item">
+                            <span class="text-gray-300">100+ juta aset premium</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Kit merek dan magic resize</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Alat penghapus latar belakang</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openWhatsApp('Canva Pro - Rp99.999/month')" class="buy-btn w-full py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Dapatkan Premium</span>
+                    </button>
+                </div>
+
+                <div class="app-card bg-premium rounded-xl p-6 border border-gray-800 card-hover" data-category="creative">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-xl app-icon flex items-center justify-center mr-4">
+                            <i class="fas fa-cut text-purple-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-white">CapCut Pro</h3>
+                            <p class="text-gray-400">Editing Video</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-tag inline-block px-4 py-1 rounded-full mb-4">
+                        Rp99.999/month
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Aplikasi editing video profesional dengan efek premium dan tanpa watermark.</p>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item">
+                            <span class="text-gray-300">Tanpa watermark pada ekspor</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Efek & template premium</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Kualitas ekspor video 4K</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openWhatsApp('CapCut Pro - Rp99.999/month')" class="buy-btn w-full py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Dapatkan Premium</span>
+                    </button>
+                </div>
+
+                <div class="app-card bg-premium rounded-xl p-6 border border-gray-800 card-hover" data-category="productivity">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-xl app-icon flex items-center justify-center mr-4">
+                            <i class="fas fa-robot text-indigo-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-white">ChatGPT Plus</h3>
+                            <p class="text-gray-400">Asisten AI</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-tag inline-block px-4 py-1 rounded-full mb-4">
+                        Rp99.999/month
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Akses ke GPT-4, respons lebih cepat, dan prioritas akses ke fitur baru.</p>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item">
+                            <span class="text-gray-300">Akses ke model GPT-4</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Waktu respons lebih cepat</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="text-gray-300">Akses prioritas ke fitur baru</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openWhatsApp('ChatGPT Plus - Rp99.999/month')" class="buy-btn w-full py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Dapatkan Premium</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-premium p-8 rounded-xl border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-accent/20 to-neon/20 flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-accent text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Aktivasi Instan</h3>
+                    <p class="text-gray-400">Dapatkan langganan premium Anda diaktifkan segera setelah konfirmasi pembayaran.</p>
+                </div>
+                
+                <div class="bg-premium p-8 rounded-xl border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-accent/20 to-neon/20 flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-accent text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Pembayaran Aman</h3>
+                    <p class="text-gray-400">Semua transaksi dienkripsi dan aman dengan berbagai opsi pembayaran tersedia.</p>
+                </div>
+                
+                <div class="bg-premium p-8 rounded-xl border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-accent/20 to-neon/20 flex items-center justify-center mb-6">
+                        <i class="fas fa-headset text-accent text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Support 24/7</h3>
+                    <p class="text-gray-400">kami siap membantu Anda 24 jam sehari untuk masalah apa pun.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-gradient-to-br from-darkest to-darker">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">
+                Siap <span class="shine-text">Berlangganan</span>?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Hubungi kami hari ini untuk memulai perjalanan langganan premium Anda
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+                <a href="https://wa.me/6288801074059" target="_blank" class="px-8 py-4 bg-gradient-to-r from-accent to-neon text-black font-bold rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-2">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    <span>Chat via WhatsApp</span>
+                </a>
+                <a href="mailto:zeuz8686@gmail.com" class="px-8 py-4 border border-accent/30 text-white font-bold rounded-lg hover:bg-accent/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-2">
+                    <i class="fas fa-envelope text-xl"></i>
+                    <span>Email Kami</span>
+                </a>
+            </div>
+            
+    <footer class="bg-darkest py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-neon flex items-center justify-center">
+                        <i class="fas fa-crown text-black text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">PREMIUM<span class="shine-text">STORE</span></span>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+                    <a href="#apps" class="text-gray-400 hover:text-accent transition">Aplikasi</a>
+                    <a href="#features" class="text-gray-400 hover:text-accent transition">Fitur</a>
+                    <a href="#contact" class="text-gray-400 hover:text-accent transition">Kontak</a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition">Kebijakan Privasi</a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition">Syarat</a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 Toko App Premium. Semua hak dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openWhatsApp(product) {
+            const whatsappNumber = "6288801074059";
+            const message = `Halo! Saya tertarik untuk membeli ${product}. Mohon info lebih detail tentang langganan dan proses pembayarannya.`;
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function filterApps(category) {
+            const cards = document.querySelectorAll('.app-card');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease-in-out';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        document.querySelector('button[class*="md:hidden"]').addEventListener('click', function() {
+            const nav = document.querySelector('.hidden.md\\:flex');
+            nav.classList.toggle('hidden');
+            nav.classList.toggle('flex');
+            nav.classList.toggle('flex-col');
+            nav.classList.toggle('absolute');
+            nav.classList.toggle('top-16');
+            nav.classList.toggle('right-4');
+            nav.classList.toggle('bg-premium');
+            nav.classList.toggle('p-4');
+            nav.classList.toggle('rounded-lg');
+            nav.classList.toggle('border');
+            nav.classList.toggle('border-gray-800');
+            nav.classList.toggle('shadow-lg');
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
